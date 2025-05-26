@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "fast-ethos-460903-i5",
+  "private_key_id": "1f6b27387364adecee130fd3d98e7113efea97c4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCPjAP9q+HxMJUc\n1SayGu2UGbuxgAfQQYTIZctNC0lHAafHItIOEM8CYE4W1S884G6iLeSYSt6WjoIZ\nbWg1m6wzE81i05obR9LB4TquQG7YBbuEMQ5QgtF7RFGUoCbrBoJtP+hO+4yzzWZF\nKXi1sZx1e5Rw7sqxPrKcZndlDxQlioADKQqCASr2ffQHcUKpZ6ifFZFhZ7ryX+wi\nAKna4uaPo1hHweQWR+J3U2K6onaqufui9Qwd3v0zFTabaWsaKgN17SXKHMVXMsZU\n/rL+oiHrEm++sihN1k3amck872yM6Uztx+1UOeyEAI3/whk2q0zQDdKsEiNwy9pg\nrgHuPysnAgMBAAECggEAI85lunOTBwI617fVkKzF4WDv4C1TBaAqOoClzyCHFUa0\n7qfhZK/Nq0aRhAGGaHWFM0AmWtSmJEEE88nGKkUcFZuValblBHQMft8rL4cT/x+i\n8Cz6aJvRHCHlBaFTQ+HaS90amgUGSl1saskW+p+Eqwt58hemiMLec8PdeWBjAp/j\nXpL3IXCB6J4hgesZ47o2aQZLQjyjBI0CDhHmZouLTfIWSSdinUWcSH2MRSPTohgG\nqUU1en+60p+lVlSs4C7Abkxz2AkjEBAGZv+G5y1j7jmrPY4nBKIbd84rx3hf6Zb6\nNxioPK5JpuYm8bk0yW6ysghIAqzwliwOgFV7hMH6qQKBgQDJ0m6Aiah2tZ7ubOYP\nOnpEkPHSBwg6XeJ+P3t9qdMwOXbLDmMcQNhmPRU2raBNURNa84JRu3H6PJju9kNb\n3OFCP/XvrrGIS1+1JrSthNVIiJjW9+iXgpgOGA1H17RlrN2NJwSXbOnkJgSkNiO+\nzEIZP3HhChLMfUj3wH1Iy1afqQKBgQC2FNFIHyxLiKXMd8Lt/AFw8IoMkEiqiasn\nihbrbljiq3+lsFv1JqbnnRU3pt+GgRh8ma7VqyeoH0Opgw6RA91/llaj9h4KoEVg\ng3DeBnvoysyyTnNdVsFQGjfy1VxcWvBG44Y/u1DXf128NB59c9ajd4G4gZcObbP/\n8VkSvQx2TwKBgDV4NeSCFArXVXMPkOgJ8yjFSfv99vUXuJEAGqSRYK1PHCTx+9oZ\nZ/u2RS+GUokJaNpY13b19V15vn7Y6cGlxFw7+9lza/+TEJk61vV90s/zuKKDbbDu\nXYCmaKZXBKlHYi8qXjIMHe9fDy2+VjwPe5ea0n3voEljC/jvm4G0tY95AoGBALGd\n2RFbp1//aozsfrCcVeOQIXpj/R6usNEfOYBr4jUrSpecU/fuvn3Nk/b3x7Bzmilh\n2VUBYuvzo5NmDv2TIazmQJos6d0/vq2JSr6q4JCT095T/OGeUXEMQmuVikVlSGI+\nbKUa2p981TlUNjH2n/hSCa6sa2hdx2rySgunctKtAoGBAI/D7uW+6tZxs8TOGEaV\n2/l0xgoVB510ExCm0UEXgUzM13GDQ8O0A8DmxvPhpfXZJdSVcdJEh1GUCrtXrOj0\nqqgGx+poXTsd/UPHg/AqnrOpXvSX9AA5z5dBYqj6bOt4DPYx7dIr5sP56l0jpwOW\ntkSaajRTRjA3nVWOs8DMwHPs\n-----END PRIVATE KEY-----\n",
+  "client_email": "sheets-writer@fast-ethos-460903-i5.iam.gserviceaccount.com",
+  "client_id": "115962047134221337900",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sheets-writer%40fast-ethos-460903-i5.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

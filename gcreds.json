@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "fast-ethos-460903-i5",
+  "private_key_id": "c3da40413893680cfc31b96dc6bdc970e2675f1a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCJ6uwA0PLXpc4W\ntBxfdAs+BeyspDiPwZqPuT17rVDLmzcCuxx5EQNF3I8JnGM3psSxKUY9xkTawJMc\n4w92BGMENAwQ/k4pBSJQtLLR1ERaRDHGO6wLHsNj2YugQkUq8XZBAUCipNp2rgf8\nTZUP7sqHUrlMwzwh7SL2vaBUq+y5AwdWBi1Sw5OVss67pl/ODLFpMaZ6d1WhUR7K\nkaZybBgWCzCBWHwt73FBpU4+ufN/pMeZKpxM5MTrkvaHb1heJYhSPHPeyKk0o+oA\nji9Kmw1hL/0hBbZWLjdXhKjpM1zE662sSZcN94w5Usg5d0onC8PauY461bT344BB\nEgGE0rtbAgMBAAECggEAHjConL0gi4gmBt5CX7q9Q0R0vI3uO7m7pb588PfNeeRu\nNFDVOMM6ni5buVTcezAsWkOYtqkSJXiGO4qQtdrb+e2Svp2ManpPOq9zfW8jz0ai\nRqyFSqHfT5otcFVRYscchbpKdc/0aopKATbSbHxvJRQ8r8sE/MA2KSD1WdOQrCbl\nRUAwUd7k10vOuOefe4+sKVsOSpXMw3ilc15R4m+Aofy5FFEQNa34sq1JJHoVjHYv\nQHZk/EEePwY4Af5XcJfc4yGCh/J7GGVU2eLKeTbsFwCdPrOBfEVT5S3OdAo4WiuP\nstxlkP7yy9i3q1UmpWouT1XwI5d/H48jVoFF78M+cQKBgQDBk7wTR6izIag32pdI\nLij91mMZBdN2utO7G+RLtS76PD3m9hoflPOzFCGuh1JrJPNOXyN/7ApZO1pf6xBF\nl/PQ597fhQZLj7jblSHZ3ZBuJATFDOrJq/rn8ppPcFUfUJuia9WEjvhV0LXfZvKc\n1WgXI1lRf1F+fJ+6xhLXqDaZTwKBgQC2ZF1YkfQa+wHPOFA38CJggYLu277BpecM\nmZa9nvwttLtsbfnLAd8KuE98I2oQ7YYv+wGyJ7Zv02cJmScxoPuMmy55vGwfIu4I\nMB0h7RHzZVevAf9MLHPDIDf7AUvxNv/1lK29GipLGCRb/bk2UgRl2Ibl8bwyW78P\n71VPUS+iNQKBgQCu2DzpgTE8U2s4v+UjGiaGWG17/YoqVMfH2oKTa1y6Q016XtHr\nssOH/egKV0o3YtGs+Tv8YHxcasLPnmc9JOnhyH3DkMjF2VQUahiAS6MYCMqSHX+4\nlvFzLer5U7JfLZTV2Oar6+Mcx/5ugfMje5KgS5pyhThbsj8oGZ6NUe+2+wKBgCze\n9iQDDDXTCLftF7cbSanKUubmgsBrSzNLWc1enpWz/+QGDk0GMdQWUd+tarutY7TM\nILeuk3BhZtjyp7TK8Pe/eaiTVVo3oq27AH/HLgJeLTst15vq17PqajtDL2axbDkD\nkdaS6FK/JrrG6djWRqSzp0RMu0r8TT3jWG6B/6D9AoGAVNQXBOQHq0lmyDqZA/s6\nHUBlzdAl627Idzx5FxMPgkjMs/aOoT7KJ3qc16gKrcHbuz/VSDtmmdNLM1EvlOKi\n6nIYjYw8emH9lSDnx0IPndCwCoxrWduZ2xhdfRS+n3df0uqE5bf4z6aZJsfx4Yuy\ndwzK+sSjr07RPuX3RsJ4hBs=\n-----END PRIVATE KEY-----\n",
+  "client_email": "ms-earnings-sheet-bot@fast-ethos-460903-i5.iam.gserviceaccount.com",
+  "client_id": "107557590458154583067",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ms-earnings-sheet-bot%40fast-ethos-460903-i5.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
