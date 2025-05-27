@@ -1,70 +1,74 @@
-import yfinance as yf
 import gspread
+import yfinance as yf
 import numpy as np
 import pandas as pd
-from datetime import datetime
 from oauth2client.service_account import ServiceAccountCredentials
 
-# ───────── Google Sheets Auth ─────────
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+# ─────── Google Sheets Auth ───────
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/drive"
+]
 creds = ServiceAccountCredentials.from_json_keyfile_name("gcreds2.json", scope)
 client = gspread.authorize(creds)
 sheet = client.open("Earnings Tracker").sheet1
+tickers = sheet.col_values(1)[1:]  # assumes tickers in column A, skip header
 
-# ───────── Get tickers ─────────
-tickers = sheet.col_values(1)[1:]  # Skip header
 
-# ───────── Helpers ─────────
-def calculate_atr(df, window=14):
-    high_low = df['High'] - df['Low']
-    high_close = np.abs(df['High'] - df['Close'].shift())
-    low_close = np.abs(df['Low'] - df['Close'].shift())
-    tr = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
-    return tr.rolling(window=window).mean()
-
-def calculate_iv_rank(current_iv, iv_history):
-    iv_min, iv_max = min(iv_history), max(iv_history)
-    return round((current_iv - iv_min) / (iv_max - iv_min), 4) if iv_max > iv_min else 0.5
-
-def calculate_zscore(series):
-    if len(series) < 2:
-        return None
-    return round((series[-1] - np.mean(series)) / np.std(series), 4)
-
-# ───────── Main Loop ─────────
-for i, symbol in enumerate(tickers, start=2):
+# ─────── Helper Functions ───────
+def safe_number(val):
     try:
-        ticker = yf.Ticker(symbol)
-        hist = ticker.history(period="6mo", interval="1d", auto_adjust=False)
-        if hist.empty or len(hist) < 21:
-            print(f"{symbol}: Not enough price data.")
-            continue
+        return round(float(val), 4)
+    except Exception:
+        return "N/A"
 
-        atr_series = calculate_atr(hist, window=14).dropna()
-        last_atr = round(atr_series.iloc[-1], 4)
-        atr_z = calculate_zscore(atr_series[-20:])
 
-        option_dates = ticker.options
-        if not option_dates:
-            raise ValueError("No option chain available")
+def calculate_atr(df, window=14):
+    high_low = df["High"] - df["Low"]
+    high_close = (df["High"] - df["Close"].shift()).abs()
+    low_close = (df["Low"] - df["Close"].shift()).abs()
+    tr = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
+    return tr.rolling(window).mean()
 
-        calls = ticker.option_chain(option_dates[0]).calls
-        spot = hist["Close"].iloc[-1]
-        atm_call = calls.iloc[(calls["strike"] - spot).abs().argsort()[:1]]
-        current_iv = float(atm_call["impliedVolatility"].iloc[0])
-        iv_history = [current_iv * (0.8 + np.random.rand() * 0.4) for _ in range(20)]
-        iv_rank = calculate_iv_rank(current_iv, iv_history)
 
-        sheet.update_cell(i, 17, iv_rank)
-        sheet.update_cell(i, 18, atr_z)
-        sheet.update_cell(i, 19, last_atr)
+# ─────── Calculate and Collect Results ───────
+output = []
+for symbol in tickers:
+    try:
+        df = yf.download(symbol, period="6mo", interval="1d", progress=False, auto_adjust=True)
+        df.dropna(inplace=True)
+        if len(df) < 15:
+            raise Exception("Not enough data for ATR")
+
+        atr = calculate_atr(df)
+        atr_pct = (atr.iloc[-1] / df["Close"].iloc[-1]) * 100 if not atr.empty else "N/A"
+
+        stock = yf.Ticker(symbol)
+        if not stock.options:
+            raise Exception("No option chain")
+        expiry = stock.options[0]
+        chain = stock.option_chain(expiry)
+        all_iv = pd.concat([
+            chain.calls["impliedVolatility"].dropna(),
+            chain.puts["impliedVolatility"].dropna()
+        ])
+        iv_now = all_iv.mean()
+        iv_min = all_iv.min()
+        iv_max = all_iv.max()
+        iv_rank = ((iv_now - iv_min) / (iv_max - iv_min)) * 100 if (iv_max - iv_min) != 0 else 50
+
+        output.append([safe_number(atr_pct), safe_number(iv_rank)])
         print(f"{symbol}: ✅")
 
     except Exception as e:
-        print(f"{symbol} error: {e}")
-        try:
-            sheet.update_cell(i, 17, "Error")
-            sheet.update_cell(i, 18, "Error")
-            sheet.update_cell(i, 19, "Error")
-        except:
-            pass
+        output.append(["N/A", "N/A"])
+        print(f"{symbol}: {e}")
+
+# ─────── Batch Update to Google Sheet (columns B & C) ───────
+cell_range = f"B2:C{len(tickers) + 1}"
+sheet.batch_update([{
+    'range': cell_range,
+    'values': output
+}])
+
+print("✅ Google Sheet updated successfully!")

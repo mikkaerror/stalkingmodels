@@ -16,7 +16,7 @@ tickers = sheet.col_values(1)[1:]
 def safe_number(val):
     try:
         return round(val.item() if hasattr(val, 'item') else float(val), 4)
-    except:
+    except Exception:
         return "N/A"
 
 def calculate_atr(df, window=14):
@@ -34,21 +34,28 @@ for symbol in tickers:
         df = yf.download(symbol, period="6mo", interval="1d", progress=False, auto_adjust=True)
         df.dropna(inplace=True)
 
+        # ATR% Calculation
         atr = calculate_atr(df)
-        atr_pct = (atr.iloc[-1] / df["Close"].iloc[-1]) * 100
+        atr_pct = (atr.iloc[-1] / df["Close"].iloc[-1]) * 100 if not atr.empty else "N/A"
 
+        # IV Rank Calculation (approximation)
         stock = yf.Ticker(symbol)
         if not stock.options:
-            raise ValueError("No option chain")
+            raise Exception("No option chain available")
 
-        chain = stock.option_chain(stock.options[0])
-        iv_now = chain.calls["impliedVolatility"].dropna().mean()
+        # Take current expiry (front month)
+        expiry = stock.options[0]
+        chain = stock.option_chain(expiry)
+        all_iv = pd.concat([
+            chain.calls['impliedVolatility'].dropna(),
+            chain.puts['impliedVolatility'].dropna()
+        ])
+        iv_now = all_iv.mean()
+        iv_min = all_iv.min()
+        iv_max = all_iv.max()
 
-        iv_hist = chain.calls["impliedVolatility"].dropna().tolist()
-        if len(iv_hist) < 2:
-            raise ValueError("Not enough IV data")
-
-        iv_rank = ((iv_now - min(iv_hist)) / (max(iv_hist) - min(iv_hist))) * 100 if max(iv_hist) != min(iv_hist) else 50
+        # IV Rank = (Current IV - Min IV) / (Max IV - Min IV)
+        iv_rank = ((iv_now - iv_min) / (iv_max - iv_min)) * 100 if (iv_max - iv_min) != 0 else 50
 
         output.append([safe_number(atr_pct), safe_number(iv_rank)])
 
