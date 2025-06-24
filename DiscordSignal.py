@@ -2,7 +2,7 @@ import gspread
 import requests
 from oauth2client.service_account import ServiceAccountCredentials
 
-# ───────── Setup ─────────
+# ───────── Google Sheets Setup ─────────
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("gcreds2.json", scope)
 client = gspread.authorize(creds)
@@ -30,30 +30,32 @@ for row in data:
         if days_until > 30:
             continue
 
-        # Pull fields with fallbacks
+        # ───── Extract Fields ─────
         setup = row.get("Setup Rec", "N/A")
         earnings = row.get("Next Earnings", "N/A")
         confidence = row.get("Confidence (3 MAX)", "N/A")
-        estimate = row.get("P/L Estimate (units of ATR%)", "N/A")
-        dollar_pl = row.get("Dollar P/L", "N/A")
         urgency = row.get("Urgency", "N/A")
-        iv_delta = row.get("IV Rank Change (5-day delta)", "N/A")
-        z_score = row.get("ATR% Z-Score", "N/A")
-        atr = row.get("20 Day ATR", "N/A")
 
-        # ───────── Clean Discord Message ─────────
-        message = f"""
-**{ticker} — {setup}**
+        # Safe numeric values
+        estimate = float(row.get("P/L Estimate (units of ATR%)") or 0)
+        dollar_pl = float(str(row.get("Dollar P/L", "0")).replace("$", "").replace(",", "") or 0)
+        iv_delta = float(row.get("IV Rank Change (5-day delta)") or 0)
+        z_score = float(row.get("ATR% Z-Score") or 0)
+        atr_val = float(str(row.get("20 Day ATR", "0")).replace("$", "").replace(",", "") or 0)
 
-🗓️ Earnings in {days_until} days ({earnings})
-✅ Signal Triggered
+        # ───── Format Values ─────
+        est_str = f"{estimate:.2f}"
+        pl_str = f"${dollar_pl:,.2f}"
+        iv_str = f"{iv_delta:+.2f}"
+        z_str = f"{z_score:+.2f}"
+        atr_str = f"${atr_val:.2f}"
 
-💵 {estimate} ATR  |  ${dollar_pl}
-📊 IV Δ (5d): {iv_delta}  |  Z: {z_score}  |  ATR: ${atr}
-🧠 Confidence: {confidence}  |  ⚡ Urgency: {urgency}
-""".strip()
+        # ───── Discord Message ─────
+        message = f"""📈 `{ticker}` — {setup} | Earnings: {earnings} (in {days_until}d)
+ATR: {est_str} | IV Δ: {iv_str} | Z: {z_str} | {atr_str} Range
+🧠 Conf: {confidence} | ⚡ Urgency: {urgency} | 💵 P/L: {pl_str}"""
 
-        # ───────── Send to Discord ─────────
+        # ───── Send to Discord ─────
         payload = {"content": message}
         response = requests.post(webhook_url, json=payload)
 
